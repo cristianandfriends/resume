@@ -1,0 +1,166 @@
+% resume-style.sty
+% All layout lives here. resume.tex should contain content only.
+%
+% Author: Cristian Gonzales
+
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{resume-style}[2026/11/08 Resume layout]
+
+% ---------------------------------------------------------------------------
+% Packages
+% ---------------------------------------------------------------------------
+
+\RequirePackage[margin=0.1in, right=30mm]{geometry}
+\RequirePackage{fancyhdr}
+\RequirePackage{hyperref}
+\RequirePackage{enumitem}
+\RequirePackage{textcomp}
+\RequirePackage{fontawesome}
+\RequirePackage{multicol}
+
+% ---------------------------------------------------------------------------
+% Page geometry and running footer
+%
+% \textheight and the first-page \headsep dance are inherited from the
+% original res.cls setup. They are kept here so the content file never has
+% to know about them.
+% ---------------------------------------------------------------------------
+
+\textheight=10in
+\footskip=25pt
+
+\fancyhf{}                       % clear all header and footer fields
+\renewcommand{\headrulewidth}{0pt} % no line in header area
+\fancyfoot[C]{}                  % no centre footer
+\pagestyle{fancy}
+
+\setlength{\headsep}{0.5in}      % default headsep for pages 2+
+\setlength{\footskip}{0pt}
+
+\fancypagestyle{firstpage}{%
+  \fancyhf{}                     % clear header/footer for the first page
+  \setlength{\headsep}{0pt}      % first page needs no headsep
+}
+\thispagestyle{firstpage}        % apply the first-page style
+
+% ---------------------------------------------------------------------------
+% Header and contact row
+% ---------------------------------------------------------------------------
+
+% \cvname{Name}{Subtitle}
+\newcommand{\cvname}[2]{%
+  \begin{center}
+    \textsc{{\Huge #1}}\\
+    \vspace{1mm}
+    \textsc{\large #2}\\
+    \vspace{1mm}
+  \end{center}%
+}
+
+% \cvcontact{icon}{url}{text}
+\newcommand{\cvcontact}[3]{#1\ \href{#2}{\textit{#3}}}
+
+% \cvcontacts{item}{item}{item}{item}
+% Four equal columns, matching the original layout.
+\newcommand{\cvcontacts}[4]{%
+  \begin{multicols}{4}
+    \begin{center}#1\end{center}%
+    \columnbreak
+    \begin{center}#2\end{center}%
+    \columnbreak
+    \begin{center}#3\end{center}%
+    \columnbreak
+    #4%
+  \end{multicols}%
+  \vspace{-3mm}%
+}
+
+% ---------------------------------------------------------------------------
+% Sections, entries, and bullets
+% ---------------------------------------------------------------------------
+
+% \cvsection{Experience}
+\newcommand{\cvsection}[1]{%
+  \textsc{{\Large #1}}%
+  \vspace{0.5mm}%
+  \hrule width\linewidth\relax
+}
+
+% \begin{cvjob}{Company}{Role}{Dates}
+%   \cvitem{...}
+% \end{cvjob}
+\newenvironment{cvjob}[3]{%
+  \textbf{#1}\\
+  \textit{#2}\hfill #3\\[1mm]%
+  \begin{itemize}%
+    \vspace{-3mm}%
+}{%
+  \end{itemize}%
+}
+
+% A single employer with two titles in sequence, e.g. a promotion.
+% \begin{cvjobdual}{Company}{Current title}{Current dates}{Prior title}{Prior dates}
+%   \cvitem{...}
+% \end{cvjobdual}
+\newenvironment{cvjobdual}[5]{%
+  \textbf{#1}\\
+  \textit{#2}\hfill #3\\[0.5mm]%
+  \textit{#4}\hfill #5\\[1mm]%
+  \begin{itemize}%
+    \vspace{-3mm}%
+}{%
+  \end{itemize}%
+}
+
+% \cvitem{text}
+\newcommand{\cvitem}[1]{\item #1}
+
+% \cveducation[optional note]{Institution}{Degree}{Dates}
+\newcommand{\cveducation}[4][]{%
+  \textbf{#2}\\
+  \textit{#3}\hfill #4\\[1mm]%
+  \if\relax\detokenize{#1}\relax
+    \par
+  \else
+    #1\par
+  \fi
+}
+
+% \cvlink{url}{text} -- an inline link (upright text)
+\newcommand{\cvlink}[2]{\href{#1}{#2}}
+
+% ---------------------------------------------------------------------------
+% Skills
+% ---------------------------------------------------------------------------
+
+% \begin{cvskills}
+%   \cvskill{Category}{comma-separated items}
+% \end{cvskills}
+\newenvironment{cvskills}{%
+  \par\vspace{\baselineskip}% match the paragraph gap after a section rule
+  % Skill names should not be split across lines (e.g. "Deep Learn-ing").
+  \hyphenpenalty=10000
+  \exhyphenpenalty=10000
+  \emergencystretch=2em
+  \begin{list}{}{%
+    \setlength{\leftmargin}{0pt}%
+    \setlength{\itemindent}{0pt}%
+    \setlength{\labelwidth}{0pt}%
+    \setlength{\labelsep}{0pt}%
+    \setlength{\itemsep}{2mm}%
+    \setlength{\parsep}{0pt}%
+    \setlength{\topsep}{0pt}%
+    \setlength{\partopsep}{0pt}%
+  }%
+}{%
+  \end{list}%
+  \vspace{-2mm}%
+}
+\newcommand{\cvskill}[2]{\item \textsc{#1:} #2}
+
+% ---------------------------------------------------------------------------
+% Footer
+% ---------------------------------------------------------------------------
+
+% \cvfooter{References available upon request.}
+\newcommand{\cvfooter}[1]{\lfoot{\textit{#1}}}

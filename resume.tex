@@ -1,144 +1,270 @@
-% Author: Cristian Gonzales %%%%%%%%%%%%%%
+% Author: Cristian Gonzales
+%
+% Content only. Layout lives in resume-style.sty.
+%
+% Editing surface:
+%   \cvname{Name}{Subtitle}
+%   \cvcontacts{item}{item}{item}{item}
+%   \cvsection{Heading}
+%   \begin{cvjob}{Company}{Role}{Dates} ... \cvitem{...} ... \end{cvjob}
+%   \begin{cvjobdual}{Company}{Title}{Dates}{Prior title}{Prior dates} ... \end{cvjobdual}
+%   \cveducation{Institution}{Degree}{Dates}
+%   \cvskill{Category}{items}
+%   \cvfooter{text}
 
 \documentclass{res}
-
-\usepackage[margin=0.1in, right=30mm]{geometry}
-\usepackage{fancyhdr}
-\usepackage{enumitem}
-\usepackage{textcomp}
-\usepackage{fontawesome}
-\usepackage{multicol}
-
-% Magic that makes errors form collusion of resume class and header/footer:
-% https://tex.stackexchange.com/questions/105586/footer-not-appearing-on-resume
-\textheight=10in
-\footskip=25pt
-\fancyhf{} % clear all header and footer fields
-\renewcommand{\headrulewidth}{0pt} % no line in header area
-\fancyfoot[C]{} % other info in "inner" position of footer line
-\pagestyle{fancy}
+\usepackage{resume-style}
 
 \begin{document}
 \begin{resume}
 
+% ---------------------------------------------------------------------------
 % Header
-\begin{center}
-\textsc{{\Huge Cristian Gonzales}}\\
-\vspace{1mm}
-\textsc{\large Software Engineer at Bizrate Insights}\\
-\vspace{1mm}
-\end{center}
+% ---------------------------------------------------------------------------
 
-% Links
-\begin{multicols}{4}
-%%%%%%%%%%%%%%%%%%%%%%%%
-\begin{center}
-\faLinkedinSquare\ 
-\textit{https://bit.ly/eey7W}
-\end{center}
-%%%%%%%%%%%%%%%%%%%%%%%%
-\columnbreak
-%%%%%%%%%%%%%%%%%%%%%%%%
-\begin{center}
-\faGithub\ 
-\textit{https://bit.ly/2McyUX}
-\end{center}
-%%%%%%%%%%%%%%%%%%%%%%%%
-\columnbreak
-%%%%%%%%%%%%%%%%%%%%%%%%
-\begin{center}
-\faGlobe\ 
-\textit{https://bit.ly/2vA649}
-\end{center}
-%%%%%%%%%%%%%%%%%%%%%%%%
-\columnbreak
-%%%%%%%%%%%%%%%%%%%%%%%%
-\faEnvelope\ 
-\textit{xcristian.gonzales@gmail.com}
-%%%%%%%%%%%%%%%%%%%%%%%%
-\end{multicols}
+\cvname{Cristian Gonzales}{Senior Engineer at Microsoft}
 
-\vspace{-3mm}
+\cvcontacts
+  {\cvcontact{\faLinkedinSquare}{https://bit.ly/eey7W}{https://bit.ly/eey7W}}
+  {\cvcontact{\faGithub}{https://bit.ly/2McyUX}{https://bit.ly/2McyUX}}
+  {\cvcontact{\faGlobe}{https://bit.ly/2vA649}{https://bit.ly/2vA649}}
+  {\cvcontact{\faEnvelope}{mailto:xcristian.gonzales@gmail.com}{xcristian.gonzales@gmail.com}}
 
-%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%
-\textsc{{\Large Experience}}
-\vspace{0.5mm}
-\hrule width18.5cm
-%%%%%%%%%%%%%%%%%%%%%%%%
-\textbf{Bizrate Insights (Meredith Corporation)}\\
-\textit{Backend Software Engineer}
-\hfill
-July 2021 -- Present\\[1mm]
-	\begin{itemize}
-		\vspace{-3mm}
-    \item Introduced in-memory caches to microservices (AWS Lambda) to reduce network requests to an internal A/B testing service, reducing response times of microservices of interest by roughly 80\% for ``hot'' Lambda containers--benchmarks in the order of 5000ms to \textless 1000ms.
-    \item Minified, and introduced CDNs (AWS CloudFront) for, static content being served by a core Java Spring microservice, cutting down the time to serve static content by \textgreater 80\% in some cases.
-    \item Architected an in-house microservice (AWS Lambda) sitting behind a REST controller (AWS API Gateway) to ban users at the network boundary, using AWS Cloud Development Kit and AWS Web Application Firewall (WAF), whereby WAF would examine universally unique identifiers associated with the user.
-    \item Introduced Object Relational Modeling, using SQLAlchemy, in the form of a Data Access Layer and packaged as a Python pip distribution, to replace ad hoc raw database operations being made in Apache Airflow jobs.
-    \item Cultivated a strong engineering culture by championing Test-Driven Development where there was otherwise none, resulting in the turnaround time for features in the Software Development Lifecycle (SDLC) being cut by nearly half, as bugs where caught earlier in the SDLC, and SDETs and developers were able to work in tandem rather than synchronously.
-    \item Championed DevOps by defining cloud infrastructure-as-code through CloudFormation, allowing for infrastructure to become less anecdotal and helping developer velocity when an engineer would try to understand the surrounding infrastructure of a given part of the greater architecture.
-    \item Championed continuous pair programming to continually review code, per extreme programming practices, and mentored junior engineers on the team in doing so.
-  \end{itemize}
-%%%%%%%%%%%%%%%%%%%%%%%%
-\textbf{Northrop Grumman}\\
-\textit{Infrastructure Software Engineer}
-\hfill
-August 2020 -- July 2021\\[1mm]
-	\begin{itemize}
-		\vspace{-3mm}
-  \item Developed a library of dynamic HashiCorp Packer configurations to build DISA and NIST STIG-hardened RHEL and CentOS machine images for VMWare VSphere and Docker, using Gradle (Groovy) and an in-house Ansible library, migrating deployments from PXE-boot to template-based and reducing deployment times by roughly 60\%.
-    \item Developed Jenkins pipelines to deploy hardened infrastructure and test in-house Ansible configurations using Docker workflows, allowing the team to save at least 80 developer hours per month, and developed VSphere wrapper APIs, using Java and Gradle, for Jenkins resource management.
-    \item Wrote Ansible playbooks to harden firewalld with respect to NIST STIGs, and tested them by spoofing IP-layer header attributes and creating Martian packets, using Python's Berkeley Sockets API interface and kernel tunables.
-    \item Wrote Ansible roles to configure and harden deployments of Cisco NX-OS Layer-3 switches, VMWare ESXi guests, Linux NetworkManager, and Chrony timeservers.
-  \end{itemize}
-%%%%%%%%%%%%%%%%%%%%%%%%
-\textbf{Northrop Grumman}\\
-\textit{Build and Release Engineer}
-\hfill
-July 2019 -- August 2020\\[1mm]
-	\begin{itemize}
-		\vspace{-3mm}
-    \item Developed Jenkins pipelines to streamline different build processes in Linux, Solaris, and Windows, decreasing the time of the build and release process from four days to two hours, recognized in a company press release.
-    \item Ported static Jenkins web interface logic into a dedicated Groovy DSL codebase to describe job configurations as code, tailored for the needs of different Jenkins pipeline workflows (developer sandboxes, release builds, nightly builds, etc.), where efforts allowed for an estimated 40\% decrease of COGS for the configuration management team.
-    \item Automated deployment for builds for ad hoc projects and ported build systems from Apache Ant to Apache Maven.
-  \end{itemize}
-%%%%%%%%%%%%%%%%%%%%%%%%
-% Manual page break
-\vspace*{4mm}
-%%%%%%%%%%%%%%%%%%%%%%%%
-\textbf{Northrop Grumman}\\
-\textit{Backend Software Engineer}
-\hfill
-July 2019 -- August 2020\\[1mm]
-	\begin{itemize}
-		\vspace{-3mm}
-    \item Developed an API to filter JMS messages from a legacy JMS service, using Guice injections to differentiate between different instances of the service and JAXB for object serialization to send messages across the wire.
-    \item Refactored database schemas and their associated JPA mappings, along with protocol buffer definitions, to differentiate between different satellite missions for a server-side event message syslog implementation, where the mission identifier was injected using Guice.
-    \item Developed a JAXB unmarshalling utility so subscribers may filter syslog event messages based on the satellite mission, where subscriptions were made through the unmarshalled data and Guice dependency injections.
-    \item Served as a Scrum Master, leading daily Scrum meetings, retrospectives, and planning.
-  \end{itemize}
-%%%%%%%%%%%%%%%%%%%%%%%%
-\textbf{Northrop Grumman}\\
-\textit{Software Engineering Intern}
-\hfill
-June 2017 -- August 2017\\[1mm]
-	\begin{itemize}
-		\vspace{-3mm}
-  %\item Interfaced with NASA's GMSEC API to build a visualization tool which tracked health statuses of satellites.
-  %\item Ported payload data, via web sockets, across multiple Northrop Grumman domains/applications while leveraging code reuse through dependency injections, using Google Guice.
-\item Prototyped a visualization tool to track satellite health statuses with NASA's GMSEC API and Guice injections.
-	\end{itemize}
-%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%
-\textsc{{\Large Skills}}
-\vspace{0.5mm}
-\hrule width18.5cm
-\textsc{Languages:} Bash, C, csh, Go, Groovy, Java, Perl, PowerShell, Python, SQL\\[2mm]
-\textsc{Build systems:} Apache Ant, Apache Maven, Gradle, make\\[2mm]
-\textsc{Tools:} Ansible, AWS, Apache Airflow, Docker, HashiCorp Packer, Git, \LaTeX, Jenkins, nmap, nping, tcpdump, Wireshark\\[2mm]
-\textsc{Concepts:} Agile Development, Operating Systems, Computer Networking, Containerization and Virtualization, Continuous Integration/Delivery (CI/CD), DevOps, Dependency Injections, Distributed Systems, Microservices, Object Relational Mapping (ORM), Object Serialization, Publish-Subscribe Messaging Pattern, Release Engineering, RESTful APIs, Test-Driven Development (TDD)\\[0.5mm]
-\vspace{-2mm}
+% ---------------------------------------------------------------------------
+% Experience
+% ---------------------------------------------------------------------------
+
+\cvsection{Experience}
+
+\begin{cvjobdual}{Microsoft Corporation}
+  {Senior Software Engineer, Office Data Flywheel}{September 2026 -- Present}
+  {Software Engineer, Excel AI}{April 2025 -- September 2026}
+  \cvitem{Sole, original author, and owner of the Office
+    \cvlink{https://www.nvidia.com/en-us/glossary/data-flywheel/}{Data Flywheel}
+    dashboard, a self-service Power BI reporting layer built using
+    \cvlink{https://learn.microsoft.com/en-us/kusto/query/}{an internal SQL-like analytics language}
+    that unifies Word, Excel, PowerPoint, and Cowork Agent product telemetry
+    derived from massive internal datasets processed through
+    \cvlink{https://learn.microsoft.com/en-us/azure/machine-learning/concept-ml-pipelines}{Azure Machine Learning (AML) pipelines}.}
+  \cvitem{Built \cvlink{https://plotly.com/python/}{Plotly}-driven visualizations
+    for user intents, document taxonomies, model comparisons, and OfficeJS
+    code-generation diagnostics within the agents, replacing ad hoc query
+    exploration with a prioritized product fix backlog and direct input to
+    model-selection and vendor decisions.}
+  \cvitem{Drove internal adoption to tens of DAU/WAU, and hundreds of distinct users
+    (accounting for 90\% of the cluster's queries), streamlining and compressing
+    analysis from days to minutes; demoed to Satya Nadella (CEO) through PM
+    leadership and set the precedent for Data Flywheel efforts across the
+    business unit, with CVP-level visibility.}
+  \cvitem{Rated 200/200 for FY26 performance (highest possible), placing in the
+    top 1--5\% of engineers at my level across the company.}
+  \cvitem{Maintained the
+    \cvlink{https://www.microsoft.com/en-us/research/group/prose/}{PROSE research group}'s
+    evaluation framework for Excel Agent Mode and built
+    Python/\cvlink{https://github.com/microsoft/cpp_client_telemetry}{C++~1DS}
+    telemetry bindings to plumb Excel Agent evaluation telemetry into internal
+    databases for the purpose of streamlining ingestion and building
+    visualizations, giving researchers a consistent view of agent configuration
+    changes and ship decisions.}
+\end{cvjobdual}
+
+\begin{cvjob}{Microsoft Corporation}{Software Engineer, Office Copilot (Backend)}{December 2024 -- April 2025}
+  \cvitem{Prototyped an AI-enriched service to serve dynamic, personalized prompts
+    that live within the
+    \cvlink{https://support.microsoft.com/en-us/office/chat-with-copilot-about-your-word-document-4482c688-a495-4571-bfcd-4a9fc6608090}{Copilot chat pane}
+    of the Office web document editor, to drive habitual usage of Copilot within
+    the Office web apps, whereby the LLM prompts are contextualized with
+    information about the user from Microsoft Graph and internal Office data
+    sources.}
+  \cvitem{Core contributor to an experiment, in an effort to further drive
+    habituated Copilot usage, to extend the functionality of the
+    \cvlink{https://support.microsoft.com/en-us/office/elevate-your-content-with-copilot-in-word-923d9763-f896-4da7-8a3f-5b12c3bfc475}{AI rewrite}
+    feature within the Word web editor, to better inform the AI-suggested
+    rewrites using previously authored text samples from the user.}
+\end{cvjob}
+
+\begin{cvjob}{Microsoft Corporation}{Software Engineer, Office Online (Backend)}{May 2023 -- December 2024}
+  % This item uses \item rather than \cvitem: one URL below contains a
+  % literal '#', and a '#' inside a macro argument cannot reach \href.
+  \item Changed
+    \cvlink{https://onenote.officeapps.live.com/hosting/discovery}{Discovery},
+    an integral part of the
+    \cvlink{https://en.wikipedia.org/wiki/Web_Application_Open_Platform_Interface}{WOPI}
+    protocol that powers \textit{all} of Office Online, to pare down
+    \cvlink{https://learn.microsoft.com/en-us/microsoft-365/cloud-storage-partner-program/online/discovery}{Office Online's partner storage integration offering}
+    to only the
+    % \href is used directly here because the URL contains a literal '#',
+    % which cannot pass through \cvlink's argument.
+    \href{https://learn.microsoft.com/en-us/microsoft-365/cloud-storage-partner-program/online/discovery#wopi-actions}{officially supported Office apps and app capabilities for partners},
+    along with mapping the partner test version of Discovery to a more
+    production-ready version--this yielded the net result of not exposing
+    internal prototyping and test datacenters, which can prove to be extremely
+    volatile, to real customers (i.e. an outage internally impacted external
+    customers).
+  \cvitem{As part of shipping new, CDN-deployed customer funnels to the flagship
+    Office apps, found at
+    \cvlink{https://powerpoint.cloud.microsoft}{powerpoint.},
+    \cvlink{https://excel.cloud.microsoft}{excel.}, and
+    \cvlink{https://word.cloud.microsoft}{word.cloud.microsoft}, leveraged
+    existing Office Online infrastructure to address a feature gap in an
+    internal offering of Azure Front Door (AFD), a layer-7 aware traffic
+    manager, by building a service on the Office Online stack to absorb failed
+    requests from AFD and proxy them to the CDN to serve the static content in
+    question, improving the reliability of serving the CDN-deployed content by
+    2\%.}
+  \cvitem{As a byproduct of standing up new web services within Office Online's
+    infrastructure to support
+    \cvlink{https://techcommunity.microsoft.com/t5/microsoft-365-blog/introducing-cloud-microsoft-a-unified-domain-for-microsoft-365/ba-p/3804961}{Office's effort to bring Office to the cloud.microsoft domain},
+    introduced the usage of the .NET 6+ runtime and Kestrel as a web server, in
+    lieu of .NET Framework and Internet Information Services (IIS), for which
+    there was precedent for, which yielded a ballpark savings of 20\% in
+    compute costs.}
+  \cvitem{Migrated server-to-server authentication flows for critical internal
+    proxy services supporting Office Online, from using app-asserted Bearer
+    tokens to more secure Proof-of-Possession tokens, mitigating the risk of
+    high-privilege access (Bearer) token theft and unauthorized access to
+    protected resources, that of which was a top-down C-suite driven effort to
+    enhance customer trust across Microsoft.}
+\end{cvjob}
+
+\begin{cvjob}{Microsoft Corporation}{Software Engineer, Microsoft Loop (Backend)}{May 2022 -- May 2023}
+  \cvitem{Led the design and implementation of a waitlist management API, using a
+    proprietary NoSQL persistent store, for
+    \cvlink{https://loop.cloud.microsoft/learn}{Loop}, a new product in the
+    Office 365 ecosystem, with an upper bound of 200,000 new users at public
+    preview.}
+  \cvitem{Implemented European Union data boundary (EUDB) -compliant merging
+    logic for Loop user ``presences'' in cross-boundary ``workspaces'', and
+    EUDB-compliant routing of requests to datacenters nearest to the client,
+    bringing down the P99 latency times for a single user presence request from
+    3 seconds to a few hundred milliseconds.}
+  \cvitem{Implemented server-to-server (S2S) authentication, using Azure Active
+    Directory (AAD) tokens, for Loop and reduced latencies using on-box token
+    caching, bringing down the P99 latency for some scenarios by more than
+    50\%.}
+\end{cvjob}
+
+\begin{cvjob}{Social Finance, Inc. (SoFi)}{Senior Software Engineer (Backend)}{March 2022 -- May 2022}
+  \cvitem{Contributor to a service adapter that served as a read-only caching
+    layer to all microservices across the company so they could meet their
+    SLAs, in an effort to reduce P99 read times for some services in the order
+    of hundreds of milliseconds.}
+  \cvitem{Prototyped a Debezium listener that listened to data change events from
+    event sources onboarded to our service, for the purpose of dynamically
+    storing them in DynamoDB, regardless of the shape (schema) of the Debezium
+    event payload.}
+  \cvitem{Introduced code infrastructure to support LocalStack in development
+    workflows to avoid the overhead of redeploying AWS infrastructure to our
+    staging environment, allowing for leaner workflows where redeployments took
+    seconds instead of minutes.}
+\end{cvjob}
+
+\begin{cvjob}{Meredith Corporation (Bizrate Insights)}{Software Engineer (Backend)}{July 2021 -- March 2022}
+  \cvitem{Introduced in-memory caches to microservices (AWS Lambda) to reduce
+    network requests to an internal A/B testing service, reducing response
+    times of microservices of interest by roughly 80\% for ``hot'' Lambda
+    containers--benchmarks in the order of 5 seconds to a few hundred
+    milliseconds.}
+  \cvitem{Minified, and introduced CDNs (AWS CloudFront) for, static content
+    being served by a core Java Spring microservice, cutting down the time to
+    serve static content by \textgreater 80\% in some cases.}
+  \cvitem{Architected a management microservice (AWS Lambda) sitting behind a
+    REST controller (AWS API Gateway) to ban users at the network boundary,
+    using AWS Cloud Development Kit and AWS Web Application Firewall (WAF),
+    whereby WAF would examine universally unique identifiers associated with the
+    user.}
+  \cvitem{Introduced Object Relational Mapping, using SQLAlchemy, in the form of
+    a Data Access Layer and packaged as a Python pip distribution, to replace ad
+    hoc raw database operations being made in Apache Airflow jobs.}
+  \cvitem{Cultivated a strong engineering culture by championing Test-Driven
+    Development where there was otherwise none, resulting in the turnaround time
+    for features in the Software Development Lifecycle (SDLC) being cut by
+    nearly half, as bugs where caught earlier in the SDLC, and SDETs and
+    developers were able to work in parallel rather than serially.}
+  \cvitem{Championed DevOps by defining cloud infrastructure-as-code through
+    CloudFormation, allowing for infrastructure to become less anecdotal and
+    helping developer velocity when an engineer would try to understand the
+    surrounding infrastructure of a given part of the greater architecture.}
+\end{cvjob}
+
+\begin{cvjob}{Northrop Grumman}{Software Engineer (Infrastructure)}{August 2020 -- July 2021}
+  \cvitem{Developed a library of dynamic HashiCorp Packer configurations to build
+    DISA and NIST STIG-hardened RHEL and CentOS machine images for VMWare
+    VSphere and Docker, using Gradle (Groovy) and an in-house Ansible library,
+    migrating deployments from PXE-boot to template-based and reducing
+    deployment times by roughly 60\%.}
+  \cvitem{Developed Jenkins pipelines to deploy hardened infrastructure and test
+    in-house Ansible configurations using Docker workflows, allowing the team to
+    save at least 80 developer hours per month, and developed VSphere wrapper
+    APIs, using Java and Gradle, for Jenkins resource management.}
+  \cvitem{Wrote Ansible playbooks to harden firewalld with respect to NIST STIGs,
+    and tested them by spoofing IP-layer header attributes and creating Martian
+    packets, using Python's Berkeley Sockets API interface and kernel tunables.}
+  \cvitem{Wrote Ansible roles to configure and harden deployments of Cisco NX-OS
+    Layer-3 switches, VMWare ESXi guests, Linux NetworkManager, and Chrony
+    timeservers.}
+\end{cvjob}
+
+\begin{cvjob}{Northrop Grumman}{Software Engineer (Build and Release)}{July 2019 -- August 2020}
+  \cvitem{Developed Jenkins pipelines to streamline different build processes in
+    Linux, Solaris, and Windows, decreasing the time of the build and release
+    process from four days to two hours,
+    \cvlink{https://web.archive.org/web/20230204223645/https://news.northropgrumman.com/news/features/northrop-grumman-increases-collaboration-with-space-and-missile-systems-center-by-implementing-agile-methodology}{recognized in a company press release}.}
+  \cvitem{Ported static Jenkins web interface logic into a dedicated Groovy DSL
+    codebase to describe job configurations as code, tailored for the needs of
+    different Jenkins pipeline workflows (developer sandboxes, release builds,
+    nightly builds, etc.), where efforts allowed for an estimated 40\% decrease
+    of COGS for the configuration management team.}
+  \cvitem{Automated deployment for builds for ad hoc projects and ported build
+    systems from Apache Ant to Apache Maven.}
+\end{cvjob}
+
+\begin{cvjob}{Northrop Grumman}{Software Engineer (Backend)}{July 2019 -- August 2020}
+  \cvitem{Developed an API to filter JMS messages from a legacy JMS service,
+    using Guice injections to differentiate between different instances of the
+    service and JAXB for object serialization to send messages across the wire.}
+  \cvitem{Refactored database schemas and their associated JPA mappings, along
+    with protocol buffer definitions, to differentiate between different
+    satellite missions for a server-side event message syslog implementation,
+    where the mission identifier was injected using Guice.}
+  \cvitem{Developed a JAXB unmarshalling utility so subscribers may filter syslog
+    event messages based on the satellite mission, where subscriptions were made
+    through the unmarshalled data and Guice dependency injections.}
+  \cvitem{Served as a Scrum Master, leading daily Scrum meetings, retrospectives,
+    and planning.}
+\end{cvjob}
+
+\begin{cvjob}{Northrop Grumman}{Software Engineering Intern}{June 2017 -- August 2017}
+  % \cvitem{Interfaced with NASA's GMSEC API to build a visualization tool which tracked health statuses of satellites.}
+  % \cvitem{Ported payload data, via web sockets, across multiple Northrop Grumman domains/applications while leveraging code reuse through dependency injections, using Google Guice.}
+  \cvitem{Prototyped a visualization tool to track satellite health statuses with
+    NASA's GMSEC API and Guice injections.}
+\end{cvjob}
+
+% ---------------------------------------------------------------------------
+% Education
+% ---------------------------------------------------------------------------
+
+\cvsection{Education}
+
+\cveducation{University of California, Santa Cruz}{Computer Science, B.S.}{June 2016 -- June 2019}
+
+\cveducation[Selected through leadership nomination to be part of Microsoft Office Product Group's (OPG) Applied Science Upskilling Program for Engineers, with a capstone project at the conclusion of the course.]{Stanford School of Engineering: \cvlink{https://online.stanford.edu/programs/artificial-intelligence-professional-program}{Artificial Intelligence Professional Program}}{\cvlink{https://online.stanford.edu/courses/xcs221-artificial-intelligence-principles-and-techniques}{XCS 221: Artificial Intelligence: Principles and Techniques}}{August 2026 -- December 2026}
+
+% ---------------------------------------------------------------------------
+% Skills
+% ---------------------------------------------------------------------------
+
+\cvsection{Skills}
+
+\begin{cvskills}
+  \cvskill{Languages}{Bash, C, C\#, Go, Java, Python, SQL, TypeScript}
+  \cvskill{Tools and ecosystems}{Apache Airflow, AWS, Docker, Git, Hugging Face, \LaTeX, PyTorch}
+  \cvskill{Concepts}{Applied AI, Build and Release Engineering, Computer Networking, Containerization and Virtualization, Deep Learning, DevOps, Distributed Systems, Experimentation and A/B Testing, Machine Learning, Operating Systems}
+\end{cvskills}
+
 \end{resume}
-\lfoot{\textit{References available upon request.}}
+
+\cvfooter{References available upon request.}
+
 \end{document}
