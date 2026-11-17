@@ -63,15 +63,10 @@
 % \cvcontacts{item}{item}{item}{item}
 % Four equal columns, matching the original layout.
 \newcommand{\cvcontacts}[4]{%
-  \begin{multicols}{4}
-    \begin{center}#1\end{center}%
-    \columnbreak
-    \begin{center}#2\end{center}%
-    \columnbreak
-    \begin{center}#3\end{center}%
-    \columnbreak
-    #4%
-  \end{multicols}%
+  \begin{center}
+    \small
+    #1\hfill #2\hfill #3\hfill #4
+  \end{center}%
   \vspace{-3mm}%
 }
 
